@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Feedback — Elixir</title>
+  <meta name="description" content="Spune-ne ce părere ai despre parfumurile Elixir și despre experiența ta pe site.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body data-page="feedback">
+  <div data-elixir-header></div>
+
+  <main>
+    <div class="container feedback-layout">
+      <div class="section__header" style="margin-bottom:32px;">
+        <h1>Lasă-ne un cuvânt</h1>
+        <p>Părerea ta ne ajută să creștem. Completează una sau ambele secțiuni — orice gând contează.</p>
+      </div>
+
+      <form id="feedback-form" novalidate>
+
+        <section class="feedback-section">
+          <h2>Despre un parfum</h2>
+          <p class="feedback-section__intro">Ai încercat unul dintre parfumurile noastre? Spune-ne ce ai simțit.</p>
+
+          <div class="form-group">
+            <label for="fb-produs">Parfum</label>
+            <select id="fb-produs" name="produsId">
+              <option value="">— alege un parfum —</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>Rating</label>
+            <div class="stars" role="radiogroup" aria-label="Rating de la 1 la 5 stele">
+              <input type="radio" id="r5" name="rating" value="5"><label for="r5" aria-label="5 stele"></label>
+              <input type="radio" id="r4" name="rating" value="4"><label for="r4" aria-label="4 stele"></label>
+              <input type="radio" id="r3" name="rating" value="3"><label for="r3" aria-label="3 stele"></label>
+              <input type="radio" id="r2" name="rating" value="2"><label for="r2" aria-label="2 stele"></label>
+              <input type="radio" id="r1" name="rating" value="1"><label for="r1" aria-label="1 stea"></label>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="fb-comentariu">Comentariu <span class="optional">(opțional)</span></label>
+            <textarea id="fb-comentariu" name="comentariu" placeholder="Ce ți-a plăcut? Ce ai schimba?"></textarea>
+          </div>
+        </section>
+
+        <section class="feedback-section">
+          <h2>Despre experiența pe site</h2>
+          <p class="feedback-section__intro">Cum ți s-a părut să navighezi pe Elixir?</p>
+
+          <div class="form-group">
+            <label>Ai găsit ușor ce căutai?</label>
+            <div class="radio-group">
+              <label><input type="radio" name="gasitUsor" value="Da"><span>Da</span></label>
+              <label><input type="radio" name="gasitUsor" value="Parțial"><span>Parțial</span></label>
+              <label><input type="radio" name="gasitUsor" value="Nu"><span>Nu</span></label>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Cum ai descrie experiența generală?</label>
+            <div class="radio-group" role="radiogroup" aria-label="Experiență de la 1 la 5">
+              <label><input type="radio" name="experientaGenerala" value="1"><span>1 · Slabă</span></label>
+              <label><input type="radio" name="experientaGenerala" value="2"><span>2</span></label>
+              <label><input type="radio" name="experientaGenerala" value="3"><span>3 · OK</span></label>
+              <label><input type="radio" name="experientaGenerala" value="4"><span>4</span></label>
+              <label><input type="radio" name="experientaGenerala" value="5"><span>5 · Excelentă</span></label>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="fb-sugestii">Ce ai vrea să vezi în viitor pe Elixir? <span class="optional">(opțional)</span></label>
+            <textarea id="fb-sugestii" name="sugestii" placeholder="Idei, sugestii, parfumuri pe care le aștepți..."></textarea>
+          </div>
+
+          <div class="form-group">
+            <label>Ne recomanzi unui prieten?</label>
+            <div class="radio-group">
+              <label><input type="radio" name="recomanda" value="Da"><span>Da</span></label>
+              <label><input type="radio" name="recomanda" value="Poate"><span>Poate</span></label>
+              <label><input type="radio" name="recomanda" value="Nu"><span>Nu</span></label>
+            </div>
+          </div>
+        </section>
+
+        <section class="feedback-section">
+          <h2>Contact <span style="font-family:var(--font-sans);font-size:.8rem;letter-spacing:.1em;color:var(--text-muted);text-transform:uppercase;margin-left:8px;">opțional</span></h2>
+          <p class="feedback-section__intro">Dacă vrei să te contactăm pentru un follow-up.</p>
+
+          <div class="form-group">
+            <label for="fb-nume">Nume <span class="optional">(opțional)</span></label>
+            <input type="text" id="fb-nume" name="nume">
+          </div>
+
+          <div class="form-group">
+            <label for="fb-email">Email <span class="optional">(opțional)</span></label>
+            <input type="email" id="fb-email" name="email">
+            <div class="form-error" data-error-for="email">Adresa de email nu pare validă.</div>
+          </div>
+        </section>
+
+        <div class="form-error" data-error-for="global" style="text-align:center;margin-bottom:16px;">
+          Te rugăm să completezi cel puțin o secțiune înainte de a trimite.
+        </div>
+
+        <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
+          <button type="reset" class="btn btn--ghost">Resetează</button>
+          <button type="submit" class="btn btn--pink">Trimite feedback pe WhatsApp</button>
+        </div>
+
+        <div class="feedback-success" data-feedback-success>
+          <strong>Mulțumim!</strong> Mesajul tău a fost pregătit într-o conversație WhatsApp.
+          Dacă fereastra nu s-a deschis, verifică dacă browserul a blocat pop-up-urile.
+        </div>
+      </form>
+    </div>
+  </main>
+
+  <div data-elixir-footer></div>
+
+  <script src="js/data.js"></script>
+  <script src="js/cos.js"></script>
+  <script src="js/whatsapp.js"></script>
+  <script src="js/header.js"></script>
+  <script src="js/feedback.js"></script>
+</body>
+</html>

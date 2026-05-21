@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Parfumuri — Elixir</title>
+  <meta name="description" content="Descoperă colecția Elixir — parfumuri florale, orientale, lemnoase, citrice și gurmande.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body data-page="produse">
+  <div data-elixir-header></div>
+
+  <main>
+    <section class="container" style="padding: 50px 0 20px;">
+      <div class="section__header">
+        <h1>Colecția Elixir</h1>
+        <p>Fiecare parfum este o poveste — alege-l pe cel care îți seamănă.</p>
+      </div>
+
+      <div class="filters" data-elixir-filters></div>
+
+      <div class="product-grid" data-elixir-catalog data-mod="all">
+        <div class="empty-state"><p>Se încarcă parfumurile...</p></div>
+      </div>
+    </section>
+  </main>
+
+  <div data-elixir-footer></div>
+
+  <script src="js/data.js"></script>
+  <script src="js/cos.js"></script>
+  <script src="js/whatsapp.js"></script>
+  <script src="js/header.js"></script>
+  <script src="js/catalog.js"></script>
+</body>
+</html>
