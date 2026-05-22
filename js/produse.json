@@ -1,1 +1,50 @@
-[]
+[
+  {
+    "id": "golden-light",
+    "nume": "Golden Light",
+    "descriereScurta": "Floral aurit, romantic, luminos",
+    "descriereLunga": "Un parfum-bijuterie inspirat de florile de primăvară surprinse într-o rază de soare. Deschiderea citrică-fructată se topește într-un buchet floral delicat, încălzit de o bază de miere, ambră și mosc cașmir. Fluturele de pe capac e o promisiune — o transformare lentă, feminină, de la prospețime la îmbrățișare.",
+    "pret": 380,
+    "volum": "30ml",
+    "imagine": "img/produse/Golden Light.jpg",
+    "categorie": "floral",
+    "note": {
+      "top": ["bergamotă", "pere", "freesia"],
+      "middle": ["trandafir centifolia", "iasomie sambac", "magnolie"],
+      "base": ["miere", "ambră aurie", "mosc cașmir"]
+    },
+    "stoc": true
+  },
+  {
+    "id": "mystic-misery",
+    "nume": "Mystic Misery",
+    "descriereScurta": "Oriental afumat, profund, misterios",
+    "descriereLunga": "Un parfum nocturn pentru cei care îmbrățișează misterul. Tămâia afumată se împletește cu oud, piele și un strop de șofran, peste o bază caldă de vetiver și mosc negru. Un sillage dramatic, melancolic, care lasă în urmă o aură de fum și seducție.",
+    "pret": 420,
+    "volum": "50ml",
+    "imagine": "img/produse/Mystic Misery.png",
+    "categorie": "oriental",
+    "note": {
+      "top": ["șofran", "piper negru", "bergamotă afumată"],
+      "middle": ["tămâie", "trandafir negru", "iris"],
+      "base": ["oud", "piele", "vetiver", "mosc negru"]
+    },
+    "stoc": true
+  },
+  {
+    "id": "sunset-serenade",
+    "nume": "Sunset Serenade",
+    "descriereScurta": "Floral-fructat, vibrant, romantic",
+    "descriereLunga": "Inspirat de cerul rozaliu al unei seri de vară târzii. Note suculente de fructe roșii și mango se topesc într-un buchet de flori albe, încălzite la fund de vanilie și ambră aurie. Un parfum optimist, luminos, care evocă apusurile lente și conversațiile lungi.",
+    "pret": 340,
+    "volum": "100ml",
+    "imagine": "img/produse/Sunset Serenade.jpeg",
+    "categorie": "floral",
+    "note": {
+      "top": ["mango", "zmeură", "lychee"],
+      "middle": ["bujor", "iasomie", "frangipani"],
+      "base": ["vanilie", "ambră", "sandal"]
+    },
+    "stoc": true
+  }
+]
