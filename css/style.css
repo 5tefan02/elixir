@@ -1109,6 +1109,34 @@ button {
   color: var(--text-muted);
 }
 
+.featured-video {
+  max-width: 900px;
+  margin: 0 auto 16px;
+  text-align: center;
+  padding: 8px 0 24px;
+}
+
+.featured-video__meta {
+  font-size: 0.78rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--pink-deep);
+  margin-bottom: 8px;
+}
+
+.featured-video__title {
+  font-family: var(--font-serif);
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  margin: 0 0 10px;
+  font-style: italic;
+}
+
+.featured-video__lead {
+  color: var(--text-muted);
+  max-width: 640px;
+  margin: 0 auto 8px;
+}
+
 .video-embed {
   position: relative;
   aspect-ratio: 16 / 9;
