@@ -77,7 +77,7 @@
       '        <h4>Contact</h4>' +
       '        <p>' +
       '          <a href="' + base + 'contact.html">Date de contact</a><br>' +
-      '          <a href="' + base + 'feedback.html">Lasă feedback</a>' +
+      '          <a href="' + base + 'feedback.html">Lasă o recenzie</a>' +
       '        </p>' +
       '      </div>' +
       '    </div>' +

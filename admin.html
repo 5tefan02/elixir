@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Administrare — Elixir</title>
+  <meta name="robots" content="noindex,nofollow">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .admin-shell { max-width: 1080px; margin: 0 auto; padding: 40px 24px 80px; }
+    .admin-lock { max-width: 380px; margin: 80px auto; background: var(--surface); padding: 32px; border-radius: var(--radius-lg); box-shadow: var(--shadow); }
+    .admin-toolbar { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; justify-content: space-between; margin-bottom: 24px; padding: 16px 20px; background: var(--surface); border-radius: var(--radius-lg); box-shadow: var(--shadow); }
+    .admin-toolbar__title { font-family: var(--font-serif); font-size: 1.4rem; margin: 0; }
+    .admin-toolbar__actions { display: flex; gap: 8px; flex-wrap: wrap; }
+    .admin-warning { background: #fff7e0; border-left: 3px solid #d4a017; padding: 14px 18px; border-radius: var(--radius); margin-bottom: 20px; font-size: 0.92rem; }
+    .admin-list { display: flex; flex-direction: column; gap: 12px; margin-bottom: 32px; }
+    .admin-item { display: grid; grid-template-columns: 56px 1fr auto; gap: 16px; align-items: center; padding: 14px 16px; background: var(--surface); border-radius: var(--radius); box-shadow: var(--shadow); }
+    .admin-item__thumb { width: 56px; height: 70px; border-radius: var(--radius); background: linear-gradient(135deg, var(--beige-soft), var(--pink)); display: flex; align-items: center; justify-content: center; overflow: hidden; font-family: var(--font-serif); font-size: 0.7rem; color: var(--text); opacity: 0.7; text-align: center; padding: 4px; }
+    .admin-item__thumb img { width: 100%; height: 100%; object-fit: cover; }
+    .admin-item__info h3 { margin: 0 0 4px; font-family: var(--font-serif); font-size: 1.1rem; }
+    .admin-item__meta { font-size: 0.85rem; color: var(--text-muted); }
+    .admin-item__actions { display: flex; gap: 6px; }
+    .admin-form { background: var(--surface); padding: 28px; border-radius: var(--radius-lg); box-shadow: var(--shadow); }
+    .admin-form h2 { margin-top: 0; }
+    .admin-form__grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    @media (max-width: 700px) { .admin-form__grid { grid-template-columns: 1fr; } }
+    .admin-form__full { grid-column: 1 / -1; }
+    .admin-form__actions { display: flex; gap: 12px; justify-content: flex-end; margin-top: 16px; flex-wrap: wrap; }
+    .admin-empty { text-align: center; padding: 40px 20px; color: var(--text-muted); background: var(--surface); border-radius: var(--radius-lg); }
+    .admin-step { background: var(--beige-soft); padding: 16px 20px; border-radius: var(--radius); margin-top: 20px; font-size: 0.92rem; }
+    .admin-step ol { margin: 8px 0 0; padding-left: 22px; }
+    .admin-step code { background: var(--surface); padding: 2px 6px; border-radius: 3px; font-size: 0.85em; }
+  </style>
+</head>
+<body data-page="admin">
+  <div data-elixir-header></div>
+
+  <main>
+    <div class="admin-shell">
+
+      <!-- LOGIN -->
+      <section class="admin-lock" data-admin-lock>
+        <h1 style="margin-top:0;">Administrare</h1>
+        <p style="color:var(--text-muted);">Introdu parola pentru a accesa panoul de administrare.</p>
+        <form id="admin-login">
+          <div class="form-group">
+            <label for="admin-pass">Parolă</label>
+            <input type="password" id="admin-pass" autocomplete="current-password" required>
+            <div class="form-error" data-error-for="pass">Parolă incorectă.</div>
+          </div>
+          <button type="submit" class="btn btn--pink btn--full">Intră</button>
+        </form>
+        <p style="font-size:.8rem;color:var(--text-muted);margin-top:18px;">
+          Această protecție e doar o barieră simplă. Parola se găsește în <code>js/admin.js</code> și o poți schimba acolo.
+        </p>
+      </section>
+
+      <!-- PANEL -->
+      <section data-admin-panel hidden>
+        <div class="admin-toolbar">
+          <h1 class="admin-toolbar__title">Parfumuri (<span data-admin-count>0</span>)</h1>
+          <div class="admin-toolbar__actions">
+            <button type="button" class="btn btn--small btn--ghost" data-admin-reset>Resetează din fișier</button>
+            <button type="button" class="btn btn--small btn--ghost" data-admin-clear>Golește tot</button>
+            <button type="button" class="btn btn--small btn--pink" data-admin-download>Descarcă produse.json</button>
+            <button type="button" class="btn btn--small" data-admin-logout>Ieși</button>
+          </div>
+        </div>
+
+        <div class="admin-warning">
+          <strong>⚠ Modificările sunt vizibile doar în acest browser</strong> până când descarci <code>produse.json</code>, îl pui în <code>D:\Proiecte\Elixir\js\</code> peste cel vechi și faci push pe GitHub.
+        </div>
+
+        <div data-admin-list class="admin-list"></div>
+
+        <!-- FORM -->
+        <div class="admin-form">
+          <h2 data-admin-form-title>Adaugă un parfum nou</h2>
+          <form id="admin-product-form">
+            <input type="hidden" name="originalId" value="">
+
+            <div class="admin-form__grid">
+              <div class="form-group admin-form__full">
+                <label for="f-nume">Nume parfum</label>
+                <input type="text" id="f-nume" name="nume" required placeholder="ex: Neroli Mistique">
+                <div class="form-error" data-error-for="nume">Numele e obligatoriu.</div>
+              </div>
+
+              <div class="form-group">
+                <label for="f-id">ID <span class="optional">(auto din nume dacă lași gol)</span></label>
+                <input type="text" id="f-id" name="id" placeholder="ex: neroli-mistique" pattern="[a-z0-9\-]+">
+                <div class="form-error" data-error-for="id">ID-ul există deja sau conține caractere invalide. Folosește litere mici, cifre și liniuțe.</div>
+              </div>
+
+              <div class="form-group">
+                <label for="f-categorie">Categorie</label>
+                <input type="text" id="f-categorie" name="categorie" required list="cat-list" placeholder="floral">
+                <datalist id="cat-list">
+                  <option value="floral">
+                  <option value="oriental">
+                  <option value="lemnos">
+                  <option value="citric">
+                  <option value="gurmand">
+                </datalist>
+              </div>
+
+              <div class="form-group">
+                <label for="f-pret">Preț (RON)</label>
+                <input type="number" id="f-pret" name="pret" min="0" step="1" required placeholder="250">
+                <div class="form-error" data-error-for="pret">Prețul trebuie să fie un număr pozitiv.</div>
+              </div>
+
+              <div class="form-group">
+                <label for="f-volum">Volum</label>
+                <input type="text" id="f-volum" name="volum" required placeholder="50ml">
+              </div>
+
+              <div class="form-group admin-form__full">
+                <label for="f-imagine">Cale imagine <span class="optional">(opțional)</span></label>
+                <input type="text" id="f-imagine" name="imagine" placeholder="img/produse/neroli.jpg">
+                <p style="font-size:.8rem;color:var(--text-muted);margin:4px 0 0;">Pune fișierul real în folderul <code>img/produse/</code> înainte de push.</p>
+              </div>
+
+              <div class="form-group admin-form__full">
+                <label for="f-descriereScurta">Descriere scurtă</label>
+                <input type="text" id="f-descriereScurta" name="descriereScurta" required maxlength="120" placeholder="Floral, citric, proaspăt">
+              </div>
+
+              <div class="form-group admin-form__full">
+                <label for="f-descriereLunga">Descriere lungă</label>
+                <textarea id="f-descriereLunga" name="descriereLunga" required rows="4" placeholder="Povestea parfumului, atmosfera pe care o creează..."></textarea>
+              </div>
+
+              <div class="form-group">
+                <label for="f-noteTop">Note de top <span class="optional">(separate prin virgulă)</span></label>
+                <input type="text" id="f-noteTop" name="noteTop" placeholder="bergamotă, neroli, lămâie">
+              </div>
+
+              <div class="form-group">
+                <label for="f-noteMiddle">Note de inimă</label>
+                <input type="text" id="f-noteMiddle" name="noteMiddle" placeholder="iasomie, trandafir">
+              </div>
+
+              <div class="form-group">
+                <label for="f-noteBase">Note de bază</label>
+                <input type="text" id="f-noteBase" name="noteBase" placeholder="mosc, lemn de cedru">
+              </div>
+
+              <div class="form-group">
+                <label style="display:flex;align-items:center;gap:8px;">
+                  <input type="checkbox" id="f-stoc" name="stoc" checked>
+                  <span>În stoc</span>
+                </label>
+              </div>
+            </div>
+
+            <div class="admin-form__actions">
+              <button type="button" class="btn btn--ghost" data-admin-form-cancel>Anulează</button>
+              <button type="submit" class="btn btn--pink" data-admin-form-submit>Adaugă parfum</button>
+            </div>
+          </form>
+        </div>
+
+        <div class="admin-step">
+          <strong>Cum publici modificările pe site:</strong>
+          <ol>
+            <li>Apasă <em>Descarcă produse.json</em> sus.</li>
+            <li>Pune fișierul descărcat peste <code>D:\Proiecte\Elixir\js\produse.json</code>.</li>
+            <li>Dacă ai adăugat imagini noi, pune-le în <code>D:\Proiecte\Elixir\img\produse\</code>.</li>
+            <li>În terminal: <code>git add . &amp;&amp; git commit -m "Actualizare parfumuri" &amp;&amp; git push</code></li>
+            <li>În ~1 minut, site-ul live se actualizează.</li>
+          </ol>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <div data-elixir-footer></div>
+
+  <script src="js/data.js"></script>
+  <script src="js/cos.js"></script>
+  <script src="js/whatsapp.js"></script>
+  <script src="js/header.js"></script>
+  <script src="js/admin.js"></script>
+</body>
+</html>
